@@ -9,16 +9,16 @@ resource "aws_instance" "web" {
 }
 
 resource "aws_security_group" "roboshop_aws" {  # name here for terraform reference
-  name        = "roboshop_terraform_aws"         #name here for aws reference
-  description = "Allow TLS inbound traffic and all outbound traffic"
+  name        = var.sg_name         #name here for aws reference
+  description = var.sg_description
   #vpc_id      = aws_vpc.main.id
 
   ingress {
     description      ="Allow all ports"
-    from_port        = 0
+    from_port        = var.inbound-from-port
     to_port          = 0
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = var.cidr_blocks
     #ipv6_cidr_blocks = ["::/0"]
   }
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "roboshop_aws" {  # name here for terraform refere
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = var.cidr_blocks
     #ipv6_cidr_blocks = ["::/0"]
   }
 
